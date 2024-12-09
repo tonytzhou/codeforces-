@@ -5,7 +5,7 @@ After having a class in school that focused a lot on solving some coding problem
 Current Rating:
 
 # Easy
-Team - Extremely easy, just need to take in a bool of 3 numbers and check if are 2 or 3 problems 
+Team - Extremely easy, just need to take in a bool of 3 numbers and check if 2/3 are true
 
 # Medium
 
