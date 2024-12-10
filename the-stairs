@@ -1,0 +1,123 @@
+/*In S1E1, Sheldon told Leonard that, just changing one step in the stairs by 2 millimeters may cause most people to trip. Sheldon had done such an experiment before, and his father broke his clavicle due to this. (Check out the scene here!)
+
+To fully convince Leonard, Sheldon also changed the height of one step in the stairs in their building, and he bet that Leonard would trip at that step if he ran down the stairs. To win the bet, Leonard decided to first find where the special step is, so that he could be prepared when running to that step.
+
+However, since the change was small, it's hard to tell which step was changed just by seeing them. Luckily, Leonard found a device from his lab that could give the absolute altitude of a position. Using the device, Leonard got the accurate altitude of all stairs.
+
+Given the sequence of the altitude of all stairs, your task is to help Leonard find the special step, i.e., if we fix the height of the step, all adjacent steps will have exactly the same difference in height.
+
+Input
+The first line contains one integer n
+, which is the number of steps in the stairs.
+
+The next line contains n
+ integers, where the i
+-th integer is the altitude of the i
+-th stair, for 1≤i≤n
+.
+
+The heights can be in either ascending or descending.
+
+Output
+The output contains one integer x
+, which means the x
+-th step had been changed by Sheldon, and has a wrong height.
+
+It is guaranteed that only one step in the stairs had been changed by Sheldon.
+
+Examples
+InputCopy
+8
+1
+2
+3
+4
+4
+6
+7
+8
+OutputCopy
+5
+InputCopy
+5
+10
+20
+31
+40
+50
+OutputCopy
+3
+InputCopy
+6
+1000
+900
+801
+700
+600
+500
+OutputCopy
+3
+Note
+For 100% of the test data, 5≤n≤100
+. The altitude of each step is a positive integer within 104
+.
+
+This problem is modified from UCRPC F23.
+
+
+*/
+
+#include <iostream>
+#include <cstdlib>
+#include <vector>
+using namespace std;
+
+int main(){
+    int numStairs, input;
+    int i;
+    int count = 0;
+    int result;
+    cin >> numStairs;
+    vector<int> inputVector;
+    vector<int> diffVector;
+
+    for(i = 0; i < numStairs; ++i){
+        cin >> input;
+        inputVector.push_back(input);
+    }
+    i = 0;
+    while(i < numStairs - 1){
+        diffVector.push_back(inputVector.at(i) - inputVector.at(i + 1));
+        ++i;
+    }
+
+    for(i = 0; i < diffVector.size(); ++i){
+        if(count == 0 || count == 1){
+            result = diffVector.at(i);
+        }
+        if(result == diffVector.at(i)){
+            ++count;
+        }
+        else if(result != diffVector.at(i)){
+            --count;
+        }  
+    }
+    int temp = 0;
+    for(i = 0; i < inputVector.size() - 2; ++i){
+        if (inputVector.at(i) - inputVector.at(i + 1) != result){
+            if(inputVector.at(i + 1) - inputVector.at(i + 2) != result){
+                cout << i + 2 << endl;
+                ++temp;
+                break;
+            }
+            else if(i == 0){
+                cout << '1' << endl;
+                ++temp;
+                break;
+            }
+        }
+    }
+    if (temp == 0){
+        cout << inputVector.size()<< endl;
+    }
+}
