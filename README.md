@@ -22,6 +22,14 @@ and if they all matched, I outputted the coordinates of the top-left corner of
 the matching grid. The time complexity of this solution is O(n^2), where n is
 the size of the grid, since I used two nested loops to iterate through it. <br>
 
+**Chocolate Frogs** - For this problem, I used a hash map to store the input card values. This
+structure was particularly useful because it allowed me to track the occurrences
+of each card efficiently. After populating the hash map, I simply outputted the
+first value (the card) and the second value (the number of occurrences). Input
+operations took O(1) time, but traversing the hash map to get the values likely
+took O(n) time.
+
+# Medium
 **The Stairs** - For this problem, I first declared all my integer variables and decided to use two
 vectors: one to store the stair heights and another to calculate the differences
 between them. After taking in my input, I iterated through the vector and
@@ -36,8 +44,5 @@ For edge cases, if i = 0, the problem lay at the beginning, and if neither of
 the previous conditions was satisfied, the wrong stair was at the end. The time
 complexity of this solution is O(n) due to the Boyer-Moore algorithm iterating
 through all the stairs <br>
-
-# Medium
-
 
 # Hard
