@@ -1,0 +1,81 @@
+/*Chocolate frog is popular at Hogwarts not only because they are delicious — they also have cards inside them so you can collect them (with famous witches and wizards). Everyone wants a full collection, but you may end up having a lot of duplicates. The first card Harry got was Dumbledore, but Ron said he already had got six of him (see the scene here).
+
+Given the current collection of Ron's cards, can you help to count the number of the distinct cards, and the number for each of them? Assume all the Witches and Wizards are labeled by positive integers.
+
+The chocolate frog and the card of Dumbledore.
+Input
+The first line contains an integer n
+, which is the number of chocolate frog cards Ron had.
+
+The next n
+ lines each contain a positive integer. Each line is the label of a card in Ron's collection.
+
+Output
+The output contains m
+ lines, where m
+ is the number of distinct cards Ron had. Each line contains two integers a
+ and b
+, where a
+ is a label that appeared in Ron's collection, and b
+ is the number of occurrences of a
+ in Ron's collection. All the lines must be sorted by the values of a
+.
+
+Example
+InputCopy
+8
+1
+5
+100
+2000
+100
+1
+1
+5
+OutputCopy
+1 3
+5 2
+100 2
+2000 1
+Note
+For 50% of the test data, the labels of the chocolate frog cards are within 106
+.
+
+For 40% of the test data, 1≤n≤8000
+.
+
+For 100% of the test data, 1≤n≤200000
+, the labels of the chocolate frog cards are within 1.5×109
+.
+
+An Unimportant Note:
+
+Harry first knew the chocolate frogs on the Hogwarts Express in his first year. In the movie, the chocolate frog jumped onto the window (check out the scene here). At the end of the story, when Harry, Ginny, Ron, and Hermione went to the King's Cross Station with their kids, there was also a chocolate frog on the window. Check out the scene here.
+
+This problem is from UCRPC 2022.
+
+
+*/
+
+#include <iostream>
+#include <cstdlib>
+#include <vector>
+#include <map>
+using namespace std;
+
+int main(){
+    map<int, int> hashMap;
+    int input;
+    cin >> input;
+    int card;
+
+    for(int i = 0; i < input; ++i){
+        cin >> card;
+        hashMap[card]++;
+    }
+
+    for(auto numbs : hashMap){
+        cout << numbs.first << " " << numbs.second << endl;
+    }
+    return 0;
+}
