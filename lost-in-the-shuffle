@@ -1,0 +1,70 @@
+/*Lost in the Shuffle is a four-player mini-game in Super Mario Party, and you can view how the game is played here.
+
+In the game, Toad places five matryoshka dolls resembling them on the table. The middle one is a special one since it contains the most mini-dolls inside. Toad will then shuffle the five dolls by swapping pairs of them for several rounds, speeding up gradually. The players will then choose a matryoshka doll and the player that chooses the special one (the one that was originally in the middle) wins the game.
+
+
+The last several rounds of shuffling go pretty fast, so it's very hard to tell by just staring at the screen. Given all the swaps that will be done in order, can you write a program to decide which one to choose to win the game?
+
+Input
+The first line of the input contains one integer, n
+ (0≤n≤104
+), which is the total number of swaps in the game.
+
+In the next n
+ lines, line i
+ contains a pair ai,bi
+ (1≤a,b≤5
+), which means that in the i
+-th swap, doll ai
+ will be swapped with doll bi
+.
+
+The five dolls are labeled 1 to 5. The middle one (the one with label 3) is our target.
+
+Output
+The output only contains one integer, which is the current position of the special doll. Note that the output must be in the range of 1 to 5.
+
+Example
+InputCopy
+5
+1 3
+2 4
+1 2
+2 5
+1 2
+OutputCopy
+5
+Note
+In the first test case, the special doll was first swapped to position 1 in the first swap. Then in the 3rd swap, it was put at position 2. Then in the 4th swap, it will be moved to position 5. The last swap didn't change its position. Therefore the output is 5.
+
+Source of pictures and descriptions: https://www.mariowiki.com/Lost_in_the_Shuffle. You can also find more details about the game from this site.
+
+This problem is modified from UCRPC F21.
+*/
+
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+int main(){
+    int num_swaps;
+    int doll = 3;
+    int x, y;
+    cin >> num_swaps;
+    int i;
+    
+    while(i < num_swaps){
+        cin >> x >> y;
+        if(x == doll){
+            doll = y;
+        }
+        else if(y == doll){
+            doll = x;
+        }
+        ++i;
+    }
+    cout << doll << endl;
+
+    return 0;
+}
+
