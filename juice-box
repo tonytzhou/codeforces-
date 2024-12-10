@@ -1,0 +1,73 @@
+/*Juice Box is a 2v2 minigame in Super Mario Party, and you can view how the game is actually played here. The game is played on a 5×6
+ grid, which holds an assortment of fruits. Each team of two must work together to find a 2×2
+ subarea that matches a certain pattern given on screen. Once they do, they must then highlight the area. As shown in the picture below, the pattern to find is:
+
+[grapebananabananawatermelon]
+
+And players 1 and 2 (Mario and Luigi with the red square) have successfully located the pattern (bottom left).
+
+
+There are in total six different types of fruits, labeled as follows:
+
+FruitLabelAppleABananaBGrapeGOrangeOStrawberrySWatermelonW
+There will always be two such patterns in the 5×6
+ grid. Can you write a program to find out both of them in the game area?
+
+Input
+The first two lines each contain 2 characters from {A,B,G,O,S,W}
+, which is the 2×2
+ pattern to find.
+
+The next five lines each contain 6 characters from {A,B,G,O,S,W}
+, which is the 5×6
+ grid of the game area.
+
+Output
+The output contains two lines, each containing two integers x1,y1
+ and x2,y2
+. They are the coordinates of the top-left corners of the two patterns you found in the game area. The rows and the columns are indexed starting from 0. The "smaller" coordinate should go first, which first compares the row index and then the column index.
+
+Example
+InputCopy
+AB
+BA
+ABSWBA
+BAABOO
+OOBASS
+WWABAB
+OSWBAO
+OutputCopy
+0 0
+1 2
+Note
+In all test data, it is guaranteed that there will be exactly two such patterns appearing in the game area which don't overlap with each other.
+
+Source of pictures and descriptions: https://www.mariowiki.com/Juice_Box. You can also find more details about the game from this site.
+
+This problem is modified from UCRPC F21.*/
+
+#include <iostream>
+#include <cstdlib>
+#include <string>
+using namespace std;
+
+int main(){
+    char patternWanted[2][2]; //multidimensional array
+    char grid[5][6];
+
+    cin >> patternWanted[0][0] >> patternWanted[0][1] >> patternWanted[1][0] >> patternWanted[1][1];
+    for(int i = 0; i < 5; i++){
+        for(int j = 0; j < 6; j++){
+            cin >> grid[i][j];
+        }
+    }
+
+    for(int i = 0; i < 4; i++){
+        for(int j = 0; j < 5; j++){
+            if(patternWanted[0][0] == grid[i][j] && patternWanted[0][1] == grid[i][j+1] 
+            && patternWanted[1][0] == grid[i+1][j] && patternWanted[1][1] == grid[i+1][j+1]){
+                cout << i << " "<< j << endl;
+            }
+        }
+    }
+}
