@@ -19,7 +19,7 @@ the juice box. After using a double for-loop to input the grid, I used another
 double for-loop to iterate through the entire grid, checking if it matched the
 desired grid pattern. This was done by comparing the four letters at each index,
 and if they all matched, I outputted the coordinates of the top-left corner of
-the matching grid. The time complexity of this solution is O(n&2), where n is
+the matching grid. The time complexity of this solution is O(n^2), where n is
 the size of the grid, since I used two nested loops to iterate through it. <br>
 
 # Medium
