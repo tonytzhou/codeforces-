@@ -6,7 +6,7 @@ Current Rating:
 
 # Easy
 Team - Extremely easy, just need to take in a bool of 3 numbers and check if 2/3 are true
-Lost in the Shuffle - Easy, takes in doll and num swaps, check which doll is being swapped and track their position
+<br>Lost in the Shuffle - Easy, takes in doll and num swaps, check which doll is being swapped and track their position
 
 # Medium
 
