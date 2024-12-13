@@ -1,0 +1,79 @@
+/*Before going to school, the first-years will prepare for everything they need for Hogwarts. Usually, they get everything from Diagon Alley - a cobblestoned wizarding alley and shopping area located in London, England behind a pub called the Leaky Cauldron.
+
+The Diagon Alley
+Harry is looking at the list of items he needs - there are n
+ of items on his shopping list, and the price of the i
+-th item is pi
+ Galleons (the wizard's currency). Unfortunately, he only has k
+ Galleons with him. Now he wants to know, in that case, how many items he can buy at most. For each item, Harry only needs at most one of them.
+
+Input
+The first line of the input contains two integers, k
+, which is the total amount of money Harry has, and n
+, which is the number of items on Harry's shopping list.
+
+The next line contains n
+ integers. The i
+-th integer is the price of the i
+-th item on Harry's shopping list.
+
+Output
+The output only contains one integer, which is the number of items Harry can buy at most.
+
+Examples
+InputCopy
+10 5
+3 5 4 7 2
+OutputCopy
+3
+InputCopy
+100 10
+8 13 4 22 11 9 20 50 16 27
+OutputCopy
+7
+Note
+For 20% of the data, n≤20
+.
+
+For 50% of the data, n≤1000
+.
+
+For 100% of the data, n≤105
+, k≤106
+.*/
+
+#include <iostream>
+#include <cstdlib>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+int main(){
+    int money = 0;
+    int numItems = 0;
+    vector<int> prices;
+    int itemsBought = 0;
+    int tempPrices = 0;
+
+    cin >> money;
+    cin >> numItems;
+
+    for(int i = 0; i < numItems; ++i){
+        cin >> tempPrices;
+        prices.push_back(tempPrices);
+    }
+
+    sort(prices.begin(), prices.end());
+    
+    int i = 0;
+    while(money > prices.at(i)){
+        money = money - prices.at(i);   
+        ++itemsBought; 
+        ++i;
+    }
+
+    cout << itemsBought << endl;
+
+    return 0;
+}
