@@ -30,7 +30,16 @@ structure was particularly useful because it allowed me to track the occurrences
 of each card efficiently. After populating the hash map, I simply outputted the
 first value (the card) and the second value (the number of occurrences). Input
 operations took O(1) time, but traversing the hash map to get the values likely
-took O(n) time.
+took O(n) time. <br>
+
+**Diagon Alley** - For this problem, I took a straightforward approach using a greedy algorithm.
+First, I gathered all the necessary inputs: money, number of items, prices, etc.
+After collecting the inputs, I sorted the vector in ascending order and iterated
+through it. For each iteration, I subtracted the price of the item and incremented
+the number of items bought until the total amount of money was less than the
+price of the item at index i. After that, I returned the total number of items
+bought. The runtime of this algorithm is O(n log n) due to the sorting function
+being called.
 
 # Medium
 **The Stairs** - For this problem, I first declared all my integer variables and decided to use two
@@ -56,7 +65,7 @@ call mergeTotalCandyCounter, keep track of the candies, and manage the array
 being sorted, while mergeTotalCandyCounter performs the actual sorting.
 In the main function, we take in the vector and output the result. The
 runtime of the algorithm should be O(n log n), as this is the typical runtime of
-merge sort
+merge sort <br>
 
 # Hard
 **Wizard Chess** - For this
