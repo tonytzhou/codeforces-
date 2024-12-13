@@ -49,7 +49,7 @@ complexity of this solution is O(n) due to the Boyer-Moore algorithm iterating
 through all the stairs <br>
 
 # Hard
-**Wizard Chess** - This was definitely the hardest problem of the homework assignment, for this
+**Wizard Chess** - For this
 problem I employed the usage of BFS and tuples. I decided to use the pair data
 structure as I knew that there were two values that I would need to keep track
 of, the row and column. I took in the input but also subtracted it by ‘a’ and ‘1’
