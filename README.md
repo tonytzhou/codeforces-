@@ -48,6 +48,16 @@ the previous conditions was satisfied, the wrong stair was at the end. The time
 complexity of this solution is O(n) due to the Boyer-Moore algorithm iterating
 through all the stairs <br>
 
+**Merge Them** - For this problem, I knew that I had to implement merge sort first and find a
+way to keep track of the number of candies that Yihan has to prepare. I decided to do this with two functions: mergeSortCandyCounter, which initializes
+the candies, and mergeTotalCandyCounter, which returns an integer that gets
+added to the total candy count. mergeSortCandyCounter is primarily used to
+call mergeTotalCandyCounter, keep track of the candies, and manage the array
+being sorted, while mergeTotalCandyCounter performs the actual sorting.
+In the main function, we take in the vector and output the result. The
+runtime of the algorithm should be O(n log n), as this is the typical runtime of
+merge sort
+
 # Hard
 **Wizard Chess** - For this
 problem I employed the usage of BFS and tuples. I decided to use the pair data
