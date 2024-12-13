@@ -1,0 +1,418 @@
+/* It's not easy to be a teacher - because you need to make all students happy. Yihan is asked to order a list of students by their exam score (from lowest to highest). Now all the students stand in a row in front of her. She has learned the merge sort algorithm, so that's exactly how she plans to do: she will divide the students into the left half and the right half, sort each of them respectively, and then merge them into a sorted row.
+
+The core part of merge sort is to merge two sorted arrays (subsets of students) into one. However, students are incoordinate because some of them are unhappy to be sorted. Generally, anytime two subsets of students A
+ and B
+ are merged, the student with the lowest score in A∪B
+, let's call the student X
+, will be very unhappy because now everyone knows that he or she didn't do well in the exam. Yihan has to give X
+ some candies to make X
+ happy again. In particular, the number of candies X
+ needs is the difference between X
+'s score and the highest score in the merged result A∪B
+. If there are multiple such students (i.e., with the same lowest score), Yihan still only needs to give out the candy to one of them since only the student standing at the very end will be unhappy.
+
+Yihan knows the initial order of the students and their scores. She wants to know how many candies she needs to prepare to finish the task of merge-sorting all the students' score, while keeping everyone happy.
+
+Input
+The first line is a single integer n(1≤n≤106)
+. Assume n
+ is a power of 2
+ so that in merge sort we can always divide it into exact halves.
+
+In each of the next n
+ lines, there is an integer that is the score si
+ of the i
+-th student 0<si≤231
+.
+
+Output
+The first line contains the number of candies that Yihan has to prepare.
+
+The output value is guaranteed to be within 231−1
+.
+
+Examples
+InputCopy
+4
+3
+5
+2
+1
+OutputCopy
+7
+InputCopy
+8
+2
+2
+3
+3
+4
+4
+1
+1
+OutputCopy
+7
+InputCopy
+16
+1
+4
+4
+8
+7
+2
+6
+1
+2
+3
+1
+2
+3
+1
+1
+5
+OutputCopy
+62
+InputCopy
+64
+1
+40
+227
+138
+160
+66
+15
+204
+204
+281
+116
+156
+250
+11
+17
+159
+202
+3
+116
+21
+126
+207
+177
+280
+254
+159
+28
+197
+125
+211
+274
+229
+79
+15
+221
+99
+190
+227
+298
+110
+75
+295
+217
+227
+196
+22
+190
+266
+82
+131
+230
+144
+72
+83
+108
+50
+146
+270
+273
+19
+272
+152
+155
+96
+OutputCopy
+10438
+InputCopy
+128
+1
+3
+16
+10
+11
+5
+1
+14
+14
+19
+8
+11
+17
+1
+2
+11
+14
+1
+8
+2
+9
+14
+12
+19
+17
+11
+2
+14
+9
+15
+19
+16
+6
+1
+15
+7
+13
+16
+20
+8
+5
+20
+15
+16
+14
+2
+13
+18
+6
+9
+16
+10
+5
+6
+8
+4
+10
+18
+19
+2
+19
+11
+11
+7
+20
+10
+6
+2
+19
+2
+11
+8
+6
+19
+11
+10
+19
+2
+16
+16
+17
+3
+1
+14
+18
+13
+15
+15
+20
+18
+5
+7
+8
+11
+12
+17
+9
+17
+6
+9
+11
+10
+6
+4
+4
+12
+17
+1
+11
+10
+20
+15
+12
+18
+13
+17
+4
+5
+15
+3
+2
+6
+1
+9
+1
+15
+19
+5
+OutputCopy
+1391
+Note
+You can simulate the process of merge sort, that is, implement a merge sort algorithm.
+
+Then every time before a merge happens (or after it finishes), check how many candies Yihan needs.
+
+Obviously, if you finish this problem correctly, you are very likely to be happy with your final score!
+
+For the first test case, we have the scores {3,5,2,1}
+.
+
+According to the way that Yihan merges the students, the first merge will occur between A1={3}
+ and B1={5}
+, resulting in 2
+ candies being given. Then the next merge will occur between A2={2}
+ and B2={1}
+, resulting in 1
+ candy being given. Then you'll have A3={3,5}
+ and B3={2,1}
+. The minimum value in A3∪B3
+ is 1
+ and the maximum value in A3∪B3
+ is 5
+, so when this merge occurs there will be 4
+ candies given.
+
+So the merge A1∪B1
+ resulted in 2
+ candies, A2∪B2
+ resulted in 1
+ candy, and A3∪B3
+ resulted in 4
+ candies, so the total candies that are given out is 7
+.
+
+Following the process for the second test case, we have that A1={2},B1={2}
+, A2={3},B2={3}
+, A3={4},B3={4}
+, and A4={1},B4={1}
+, where each merge will require 0
+ candies.
+
+Then we'll have A5={2,2},B5={3,3}
+ where the merge A5∪B5
+ results in 1
+ candy being given out and A6={4,4},B6={1,1}
+ where the merge A6∪B6
+ results in 3
+ candies being given out.
+
+Finally we'll have A7={2,2,3,3},B7={4,4,1,1}
+ where the merge A7∪B7
+ results in 3
+ candies being given out.
+
+Thus in total, for the second case, 0+0+0+0+1+3+3=7
+ candies will be given out.
+*/
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+long mergeTotalCandyCounter(vector<int>& arr, vector<int>& temp, int left, int mid, int right) {
+    int i = left;
+    int j = mid + 1; 
+    int k = left;
+    int candies = 0;
+    
+    int minVal = arr[left], maxVal = arr[left];
+
+    for (int i = left; i <= mid; i++) {
+      if (arr[i] < minVal){ 
+        minVal = arr[i];
+        }
+      if (arr[i] > maxVal){ 
+        maxVal = arr[i];
+        }
+    }
+
+    for (int i = mid + 1; i <= right; i++) {
+       if (arr[i] < minVal){
+         minVal = arr[i];
+       }
+       if (arr[i] > maxVal) {
+        maxVal = arr[i];
+    }
+    }
+    
+    candies = candies + (maxVal - minVal);
+
+    while (i <= mid && j <= right) {
+        if (arr[i] <= arr[j]) {
+            temp[k++] = arr[i++];
+        } else {
+            temp[k++] = arr[j++];
+        }
+    }
+
+    while (i <= mid) {
+        temp[k++] = arr[i++];
+    }
+
+    while (j <= right) {
+        temp[k++] = arr[j++];
+    }
+
+    for (i = left; i <= right; i++) {
+        arr[i] = temp[i];
+    }
+
+    return candies;
+}
+
+long mergeSortCandyCounter(vector<int>& arr, vector<int>& temp, int left, int right) {
+    int candies = 0;
+    if (left < right) {
+        int mid = (left + right) / 2;
+
+        candies = candies + mergeSortCandyCounter(arr, temp, left, mid);
+        candies = candies + mergeSortCandyCounter(arr, temp, mid + 1, right);
+
+        candies = candies + mergeTotalCandyCounter(arr, temp, left, mid, right);
+    }
+    return candies;
+}
+
+
+int main() {
+    int numInputs;
+    int result;
+    cin >> numInputs; 
+    vector<int> tempVector(numInputs);
+    vector<int> resultVector(numInputs);
+
+
+    for (int i = 0; i < numInputs; i++) {
+        cin >> resultVector[i]; 
+    }
+
+    result = mergeSortCandyCounter(resultVector, tempVector, 0, numInputs - 1);
+    cout << result << endl;
+    return 0;
+}
