@@ -39,7 +39,25 @@ through it. For each iteration, I subtracted the price of the item and increment
 the number of items bought until the total amount of money was less than the
 price of the item at index i. After that, I returned the total number of items
 bought. The runtime of this algorithm is O(n log n) due to the sorting function
-being called.
+being called. <br>
+
+**Merge the Candies** For this problem, I originally thought to implement a Huffman tree as it fits the
+problem to keep adding the smallest number in order to get the most optimal solution. I then realized that I can use a priority queue to automatically sort itself,
+keeping the minimum value at the front. To do this, I took the numbers inputted
+and pushed it into the priority queue, then taking the first two values, popping
+them, adding them together, and pushing whatever I got back into the priority
+queue. This continued as long as there were numbers in the priority queue to
+account for all the values. Lastly, I multiplied the end result by 2 to account
+for Yihan counting the number she got twice every time, making it less redundant. <br>
+
+**Simplest Knapsack in the World** For this problem, I knew that I had to use a dynamic programming approach
+after going through it in class so much. I decided to use a pair to represent my data as I knew that the values and weights corresponded with one
+another. I implemented dynamic programming through the function called
+callDP taking in all the inputs I needed, along with the vector of a vector
+to store all known values, being my “table”. The function first checks base
+cases, being no items or no weightBudget, the proceeds to check if the value
+at the vector is -1 or not. Best is then calculated recursively, taking the max
+value I can get at a given weight, and then stored into dpVec
 
 # Medium
 **The Stairs** - For this problem, I first declared all my integer variables and decided to use two
