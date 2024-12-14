@@ -1,0 +1,109 @@
+/* B. The simplest knapsack problem in the world
+time limit per test1 second
+memory limit per test256 megabytes
+This is a 0/1 simple knapsack problem: so simple that Yihan doesn't want to make up a story for it.
+
+Given n
+ items, with weight wi
+ and value vi
+, and the capacity of your knapsack W
+, compute the maximum possible total value of the items selected within weight W
+. You can select every item at most once.
+
+Input
+The first line contains two numbers W
+ (1≤W≤1000
+), which is the weight budget, and n
+ (1≤n≤100
+), which is the number of items.
+
+The next n
+ lines each contains 2
+ integers. The i
+-th line contains wi
+ and vi
+.
+
+All wi
+ and vi
+ are in range 1
+ to 100
+.
+
+Output
+The output only contains one integer, which is the maximum value you can get by selecting items within total weight W
+.
+
+Examples
+InputCopy
+20 5
+6 3
+7 2
+14 4
+3 1
+10 5
+OutputCopy
+9
+InputCopy
+100 10
+30 5
+50 7
+20 8
+87 6
+55 4
+27 3
+12 2
+99 10
+1 1
+30 4
+OutputCopy
+20*/
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int callDP(vector<pair<int, int>>& vec, int weightBudget, int index, vector<vector<int>>& dpVec) {
+    if (index == 0 || weightBudget == 0) { //base case, no items or weightBudget doesnt exist
+        return 0;
+    }
+
+    if (dpVec.at(index).at(weightBudget) != -1) { //check if solved (if its -1 then it hasnt been solved yet)
+        return dpVec.at(index).at(weightBudget);
+    }
+
+    int best = callDP(vec, weightBudget, index - 1, dpVec); //calls function to initialize best
+
+    if (weightBudget >= vec.at(index - 1).first) {
+        int current = callDP(vec, weightBudget - vec.at(index - 1).first, index - 1, dpVec) + vec.at(index - 1).second; //includes current item if the budget allows it
+        best = max(best, current);
+    }   
+
+    dpVec.at(index).at(weightBudget) = best; //result is stored in dpVec
+    return best;  
+}
+
+int main() {
+    int inputWeightBudget;
+    int inputNumItems; 
+    pair<int, int> itemPair;
+    vector<pair<int, int>> vecPairs;
+
+    cin >> inputWeightBudget;
+    cin >> inputNumItems;
+
+    for (int i = 0; i < inputNumItems; ++i) {
+        cin >> itemPair.first; // weight of item
+        cin >> itemPair.second; // value of item
+        vecPairs.push_back(itemPair);
+    }
+    
+    vector<vector<int>> dpVec(inputNumItems + 1, vector<int>(inputWeightBudget + 1, -1));
+
+    int answer = callDP(vecPairs, inputWeightBudget, inputNumItems, dpVec);
+    
+    cout << answer << endl;
+
+    return 0;
+}
