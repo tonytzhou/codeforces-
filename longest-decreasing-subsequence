@@ -1,0 +1,82 @@
+/*A. Longest decreasing subsequence
+time limit per test1 second
+memory limit per test256 megabytes
+In class, we talked about how to compute the longest increasing subsequence. In this problem, you are going to write a program to compute the longest decreasing subsequence (LDS) of a sequence. In particular, for a sequence {a1,a2,a3,…,an}
+, a decreasing subsequence is a sequence
+
+ai1,ai2,…,aim
+
+where 1≤i1<i2<⋯<im≤n
+, and ai1>ai2>⋯>aim
+. We want to find the longest such decreasing subsequence. You only need to output the length of the LDS.
+
+Input
+The first line contains one integer n
+ (1≤n≤1000
+).
+
+The next n
+ lines each contains an integer. The i
+-th line contains the i
+-th element of the input sequence ai
+.
+
+All numbers are in range [0,106]
+.
+
+Output
+The output only contains one integer, which is the longest length of the LDS of the input string.
+
+Examples
+InputCopy
+9
+10 5 4 7 9 6 3 8 2
+OutputCopy
+5
+InputCopy
+5
+22160 297625 230329 191306 867900
+OutputCopy
+3
+InputCopy
+8
+289 943948 654318 680546 696035 710570 503887 430867
+OutputCopy
+4
+InputCopy
+8
+878361 973449 649581 186790 904723 54458 959645 322343
+OutputCopy
+4*/
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int numInputs;
+    int userInput;
+    int maxLength;
+    
+    cin >> numInputs;
+    vector<int> subsequence(numInputs);
+    vector<int> dp(numInputs, 1);
+
+    for (int i = 0; i < numInputs; ++i) {
+        cin >> subsequence.at(i);
+    }
+
+    for (int i = 1; i < numInputs; ++i) {
+        for (int j = 0; j < i; ++j) {
+            if (subsequence.at(j) > subsequence.at(i)) { 
+                dp.at(i) = max(dp.at(i), dp.at(j) + 1);
+            }
+        }
+    }
+
+    maxLength = *max_element(dp.begin(), dp.end());
+    cout << maxLength << endl;
+
+    return 0;
+}
