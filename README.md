@@ -57,7 +57,30 @@ callDP taking in all the inputs I needed, along with the vector of a vector
 to store all known values, being my “table”. The function first checks base
 cases, being no items or no weightBudget, the proceeds to check if the value
 at the vector is -1 or not. Best is then calculated recursively, taking the max
-value I can get at a given weight, and then stored into dpVec
+value I can get at a given weight, and then stored into dpVec <br>
+
+**Longest Decreasing Subsequence** For this problem, I knew that it was extremely similar to the Longest Increasing
+Subsequence DP problem, so I used that as a sort of framework. The nested
+for loop calculates the LES at each position i from going through each element
+in the subsequence from the second element and the inner loop checks if all
+previous elements are greater than the current element i. Once this is checked
+and valid, it gets pushed into the DP vector and keeps track of the max values.
+By using max element at the end, I’m able to find the length of the longest
+decreasing subsequnece. It would have a runtime of O(n^2) due to the double for loop. <br>
+
+**Weighted Edit Distance** For this problem, we went over it in class so I had a rough idea of how to solve it
+while utilizing the slides. I decided to call it in a separate function to not clutter
+the main code, but first it initizliaes the 2d vector of dpVec in order to store the
+minimum cost it would take to find the shortest edit distance. From then on,
+the base cases are initialized, being the deletion cost and insertion costs. This is
+shown through the deleting of i elements and the insertion of j elements. After
+that the nested for loop is called, iterating all the prefixes of aSequence and
+bSequence in order to calculate the minimum cost to transform the sequences.
+Once it goes through all the insertion, deletion, and edit costs, then it takes the
+minmum of them and updates the dpVec. Once all this is done, the min result
+is returned at the end. Due to the double for loop as well, it would lead to
+O(n^2) runtime. <br>
+
 
 # Medium
 **The Stairs** - For this problem, I first declared all my integer variables and decided to use two
