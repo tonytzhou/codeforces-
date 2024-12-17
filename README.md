@@ -108,17 +108,6 @@ In the main function, we take in the vector and output the result. The
 runtime of the algorithm should be O(n log n), as this is the typical runtime of
 merge sort <br>
 
-**Longest Decreasing Subsequence** - Longest Decreasing Subsequence
-For this problem, I knew that it was extremely similar to the Longest Increasing
-Subsequence DP problem, so I used that as a sort of framework. The nested
-for loop calculates the LES at each position i from going through each element
-in the subsequence from the second element and the inner loop checks if all
-previous elements are greater than the current element i. Once this is checked
-and valid, it gets pushed into the DP vector and keeps track of the max values.
-By using max element at the end, I’m able to find the length of the longest
-decreasing subsequnece. It would have a runtime of O(n^2) due to the double
-for loop. <br>
-
 
 # Hard
 **Wizard Chess** - For this
