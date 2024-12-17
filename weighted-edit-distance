@@ -63,32 +63,51 @@ OutputCopy
 
 #include <iostream>
 #include <vector>
+#include <cmath>
 #include <algorithm>
 using namespace std;
 
-int main() {
-    int numInputs;
-    int userInput;
-    int maxLength;
-    
-    cin >> numInputs;
-    vector<int> subsequence(numInputs);
-    vector<int> dp(numInputs, 1);
+int calculateWeightedEditDistance(const vector<int>& aSequence, const vector<int>& bSequence, int sizeA, int sizeB) {
+    vector<vector<int>> dpVec(sizeA + 1, vector<int>(sizeB + 1, 0));
 
-    for (int i = 0; i < numInputs; ++i) {
-        cin >> subsequence.at(i);
+    for (int i = 1; i <= max(sizeA, sizeB); ++i) {
+        if (i <= sizeA) dpVec.at(i).at(0) = dpVec.at(i-1).at(0) + aSequence.at(i-1); 
+        if (i <= sizeB) dpVec.at(0).at(i) = dpVec.at(0).at(i-1) + bSequence.at(i-1); 
     }
 
-    for (int i = 1; i < numInputs; ++i) {
-        for (int j = 0; j < i; ++j) {
-            if (subsequence.at(j) > subsequence.at(i)) { 
-                dp.at(i) = max(dp.at(i), dp.at(j) + 1);
-            }
+    for (int i = 1; i <= sizeA; ++i) {
+        for (int j = 1; j <= sizeB; ++j) {
+            int insertCost = dpVec.at(i).at(j-1) + bSequence.at(j-1);
+            int deleteCost = dpVec.at(i-1).at(j) + aSequence.at(i-1);
+            int editCost = dpVec.at(i-1).at(j-1) + abs(aSequence.at(i-1) - bSequence.at(j-1));
+
+            dpVec.at(i).at(j) = min({insertCost, deleteCost, editCost});
         }
     }
 
-    maxLength = *max_element(dp.begin(), dp.end());
-    cout << maxLength << endl;
+    return dpVec.at(sizeA).at(sizeB);
+}
+
+int main() {
+    int aLength;
+    int bLength;
+    int result;
+
+    cin >> aLength;
+    cin >> bLength;
+
+    vector<int> aSequence(aLength);
+    vector<int> bSequence(bLength);
+
+    for (int i = 0; i < aLength; ++i) {
+        cin >> aSequence.at(i);
+    }
+    for (int i = 0; i < bLength; ++i) {
+        cin >> bSequence.at(i);
+    }
+
+    result = calculateWeightedEditDistance(aSequence, bSequence, aLength, bLength);
+    cout << result << endl;
 
     return 0;
 }
