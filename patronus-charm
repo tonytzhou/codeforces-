@@ -1,0 +1,77 @@
+/* The Patronus Charm (Expecto Patronum) is the most famous and one of the most powerful defensive charms. It will evoke a partially-tangible positive energy force known as a Patronus (or spirit guardian) to protect the wizard who conjures it. It is also unique to different wizards. For example, Harry Potter's Patronus is a stag, which is also his father's Animagus form (the animal that his father could transform into) and Patronus.
+
+To conjure a Patronus, you need to focus on a very happy memory — the happier the memory is, the better the charm works. The first time Harry learned the Patronus Charm, he chose the moment when he had first ridden a broomstick.
+
+The memory itself consists of a time series of fragments. Each fragment, although all positive, still had a different happiness value to Harry. Harry wanted the memory to work best: he wanted to select a subset of these fragments and recall them in the same order as they actually happened (but he would just skip some fragments if they were not happy enough). He decided to make the selected fragments to have strictly increasing happiness, so he could feel more and more powerful. In addition, he wanted to maximize the total happiness of the selected memories to make his Patronus strong.
+
+Given the happiness values of Harry's memory fragments in time series, help him to find the best series of memory fragments to support the Patronus Charm.
+
+Harry Potter's Patronus
+Input
+The first line contains one integer n
+, which is the number of memory fragments Harry had.
+
+The next line contains n
+ positive integers, which are the happiness value of each memory fragment.
+
+Output
+The output only contains one integer, which is the maximum total happiness Harry could get from selecting a subsequence of the given memory in the input. The selected memory series must have a strictly increasing happiness value and must be recalled in the same order as they appear in the input.
+
+Examples
+InputCopy
+5
+4 1 2 5 3
+OutputCopy
+9
+InputCopy
+15
+1 3 6 5 4 8 10 3 2 6 4 9 7 6 4
+OutputCopy
+28
+Note
+For 30% of the tests, n≤20
+.
+
+For 100% of the tests, n≤1000
+.
+
+The happiness of all memory fragments is within 106
+.*/
+
+#include <iostream>
+#include <vector>
+#include <algorithm> 
+
+using namespace std;
+
+int dpCalc(const vector<int>& inputArray, int numInputs) {
+    vector<int> dpArray(numInputs); 
+    int greatest = 0;
+
+    for (int i = 0; i < numInputs; i++) {
+        dpArray[i] = inputArray[i];
+        for (int j = 0; j < i; j++) {
+            if (inputArray[j] < inputArray[i]) {
+                dpArray[i] = max(dpArray[i], dpArray[j] + inputArray[i]);
+            }
+        }
+        greatest = max(greatest, dpArray[i]);
+    }
+    return greatest;
+}
+
+int main() {
+    int numInputs;
+    cin >> numInputs;
+    vector<int> inputArray(numInputs); 
+
+    for (int i = 0; i < numInputs; i++) {
+        cin >> inputArray[i];
+    }
+
+    int greatest = dpCalc(inputArray, numInputs);
+
+    cout << greatest << endl;
+
+    return 0;
+}
