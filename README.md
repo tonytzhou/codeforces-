@@ -116,7 +116,7 @@ in the subsequence from the second element and the inner loop checks if all
 previous elements are greater than the current element i. Once this is checked
 and valid, it gets pushed into the DP vector and keeps track of the max values.
 By using max element at the end, I’m able to find the length of the longest
-decreasing subsequnece. It would have a runtime of O(n&2) due to the double
+decreasing subsequnece. It would have a runtime of O(n^2) due to the double
 for loop. <br>
 
 
