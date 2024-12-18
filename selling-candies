@@ -1,0 +1,149 @@
+/*A. Selling candies
+time limit per test5 seconds
+memory limit per test256 megabytes
+You probably know that Yihan has a unique candy string, which, because of its uniqueness (and because it's symmetric), is now very popular. In some cities, the price can be rather high. Yihan decides to resell it to make some money.
+
+There are n
+ cities where Yihan could sell this candy string. For city i
+, the selling price of the candy string is pi
+ dollars. City 0 is Riverside, and Yihan lives in Riverside. She decided to travel from Riverside to one of the cities to sell it at price of pi
+.
+
+However, traveling from one city to another can also be expensive. In particular, Yihan knows that there are m
+ roads between the cities. Road i
+ is represented by xi,yi,ci
+, meaning that there is a road connecting city xi
+ with city yi
+, and the cost to travel through this road is ci
+ dollars. All the roads are bi-directional, i.e., you could travel from xi
+ to yi
+ at cost of ci
+, and you can also travel from yi
+ to xi
+ at cost of ci
+.
+
+Yihan wants to know what is the highest profit she can make by selling the candy string. In particular, she will need to travel to a certain city k
+, earn pk
+ dollars, and travel back to Riverside. The profit she can make is pk
+ minus the cost she spent on traveling. Yihan always starts traveling from city 0, and she needs to come back to city 0 at the end.
+
+Of course, if it's impossible for Yihan to make any profit, Yihan will not do that (so the profit is at least 0).
+
+Input
+The first line contains two numbers n
+ and m
+, (1≤n≤105,1≤m≤106)
+, which are the number of cities and number of roads.
+
+The next n
+ lines, the i
+-th line in this part contains the selling price of the candy string at city i−1
+.
+
+The next m
+ lines each containing three numbers. The i
+-th line in this part contains three integers: xi,yi,ci
+, which the information about the i
+-th road. This means that there is a bi-directional road connecting city xi
+ and yi
+, and traveling through this road costs ci
+ dollars.
+
+Note that the cities are labeled from 0 to n−1
+.
+
+Output
+The output contains one number, which is the highest profit Yihan could make. If Yihan cannot make any profit, your output should be 0
+. In other words, your output cannot be negative.
+
+Example
+InputCopy
+4 4
+8
+16
+28
+20
+0 1 4
+0 2 8
+1 3 1
+0 3 8
+OutputCopy
+12*/
+
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <queue>
+
+using namespace std;
+typedef pair<int, int> pairInt;
+
+int highestProfit(int vertex, int edges, vector<int>& prices, vector<vector<pairInt>>& graph) {
+    vector<int> distances(vertex, 999999);
+    int maxProfit = 0;
+    int profit, value, cost;
+    priority_queue<pairInt, vector<pairInt>, greater<pairInt>> priorityQueue; //priority queue of pairs
+
+    distances.at(0) = 0;
+    priorityQueue.push({0, 0});
+
+    while (!priorityQueue.empty()) {
+        int currDistance = priorityQueue.top().first;
+        int currNode = priorityQueue.top().second;
+        priorityQueue.pop();
+
+        if (currDistance <= distances.at(currNode)) {
+            for (int i = 0; i < graph.at(currNode).size(); ++i) {
+                value = graph[currNode][i].first;
+                cost = graph[currNode][i].second;
+                if (distances.at(currNode) + cost < distances.at(value)) {
+                    distances.at(value) = distances.at(currNode) + cost;
+                    priorityQueue.push({distances.at(value), value});
+                }
+            }
+        }
+    }
+
+    for (int i = 1; i < vertex; ++i) { 
+        if (distances.at(i) != 999999) {
+            profit = prices.at(i) - (distances.at(i) * 2);
+            if(profit > maxProfit){
+                maxProfit = profit;
+            }
+        }
+    }
+
+    if(maxProfit > 0){
+        return maxProfit;
+    }
+    else{
+        return 0;
+    }
+}
+
+int main() {
+    int vertex, edges, currPrice, output;
+    vector<int> prices;
+    cin >> vertex >> edges;
+    vector<vector<pairInt>> graph(vertex);
+
+    for (int i = 0; i < vertex; ++i) {
+        cin >> currPrice;
+        prices.push_back(currPrice);
+    }
+
+    for (int i = 0; i < edges; ++i) {
+        int city1, city2, cost;
+        cin >> city1 >> city2 >> cost;
+        graph.at(city1).push_back({city2, cost});
+        graph.at(city2).push_back({city1, cost});
+    }
+
+    output = highestProfit(vertex, edges, prices, graph);
+    cout << output << endl;
+
+    return 0;
+}
+
+
