@@ -108,6 +108,8 @@ In the main function, we take in the vector and output the result. The
 runtime of the algorithm should be O(n log n), as this is the typical runtime of
 merge sort <br>
 
+**Patronus Charm** This problem is similar to the previous one with the longest decreasing subsequence. Instead of storing the length, we instead want to store the sum of the longest subsequence. The main first takes in the input from the array and then calls the dpFunction which initializes dpVector to go through and find the greatest sum. This is done through a nested for loop that takes the integer at the current sum of the longest increasing subsequence and the current one, then  taking the max of them. After going through all the loops, at the end it returns the greatest possible value. This is done in O(n^2) runtime due to the double for loop being present. <br>
+
 
 # Hard
 **Wizard Chess** - For this
