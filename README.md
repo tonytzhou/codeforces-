@@ -110,6 +110,18 @@ merge sort <br>
 
 **Patronus Charm** This problem is similar to the previous one with the longest decreasing subsequence. Instead of storing the length, we instead want to store the sum of the longest subsequence. The main first takes in the input from the array and then calls the dpFunction which initializes dpVector to go through and find the greatest sum. This is done through a nested for loop that takes the integer at the current sum of the longest increasing subsequence and the current one, then  taking the max of them. After going through all the loops, at the end it returns the greatest possible value. This is done in O(n^2) runtime due to the double for loop being present. <br>
 
+**Selling Candies** For this problem, I knew that I had to implement Dijikstra’s algorithm with an
+extra variable, being the cost that I could sell at each city. I decided to do this by
+using a priority queue and comparing all the costs, distances, and max profits to
+another. First, I use a vertex to label all the node that have a connecting edge, if
+they don’t then it would be filled with 999999. The priority queue is then made
+and the first point 0,0 is pushed onto it. While the priority queue is not empty,
+it takes the current distance and current node and compares it to the neighbors
+of current current node. If the distance to a neighbor is shorter than the current distance, then it updates it and calculates the profit at the end. This is
+done through taking the sale price at a given node, (prices.at(i)), then subtracting it by how much it takes to get there times 2, representing going back and
+forth from the nodes. This would result in a O(E log V) runtime due to having
+to visit every node once, and uses a priority queue which has O (log V) runtime. <br>
+
 
 # Hard
 **Wizard Chess** - For this
