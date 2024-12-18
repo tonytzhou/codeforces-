@@ -122,6 +122,20 @@ done through taking the sale price at a given node, (prices.at(i)), then subtrac
 forth from the nodes. This would result in a O(E log V) runtime due to having
 to visit every node once, and uses a priority queue which has O (log V) runtime. <br>
 
+**Minimum Spanning Tree** - For this problem, I had to implement Kruskal’s algorithm in order to find the
+minimum spanning tree using the least distances. The main function takes in
+all the input and uses a tuple along with a vector of tuples in order to store
+all the necessary variables. The minCostToConnect function is then called and
+sorts the tupleVector and creates a new component2 vector to represent each
+device. It then loops through the edges and determines to add an edge or not if
+it does not form a cycle. Once an edge is added, overallCost gets updated and
+the edgesUsed also gets incremented.This is done through mergeComponents,
+performing the merge after its check using the findComponent function. This
+is done until the MST is completed, checked through the if (edgesUsed ==
+numDevices - 1). The result is then outputted in the end, being the smallest
+cost to connect all the devices. The runtime of this algorithm should result in
+O(E log E) since it sorts the edges and has to go through them in order to compute the smallest cost. <br>
+
 
 # Hard
 **Wizard Chess** - For this
