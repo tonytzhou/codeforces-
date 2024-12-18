@@ -1,0 +1,158 @@
+/*UCR is planning to build a LAN (Local Area Network) on campus. There are n
+ major devices that need to be connected to this LAN, and the goal is to connect all of them. Note that, as long as each two devices are connected with each other, the network is valid.
+
+However, the cost of connecting two devices depends on many factors (e.g., location). As a result, connecting each pair of devices has a different cost. It is even impossible to connect some pairs. In particular, there are only m
+ possible pairs of connections between the devices. Given all the m
+ pairs of devices that can be connected with each other, and the connecting cost, the LAN building committee wants to know the lowest cost to connect all the devices. Of course, this is not an easy task. Since they heard that you're taking CS141, they entrusted you to solve this task.
+
+Input
+The first line contains two integers n
+ and m
+ (n≤103
+, m≤106
+), which are the number of devices, and the number of possible connections. The devices are labeled from 0
+ to n−1
+.
+
+The next m
+ lines each contains three integers x
+, y
+ and z
+ (0≤x,y<n
+, 1≤z≤1000)
+, which means devices x
+ and y
+ can be connected, and connecting them has cost z
+.
+
+Output
+The output contains only one integer, which is the smallest cost connect all the devices.
+
+Examples
+InputCopy
+5 6
+0 1 2
+1 2 3
+2 4 5
+1 4 10
+1 3 1
+3 4 4
+OutputCopy
+10
+InputCopy
+5 7
+0 1 78
+1 2 94
+1 3 63
+2 4 49
+0 2 34
+3 4 686
+0 3 904
+OutputCopy
+224
+InputCopy
+5 10
+0 1 68
+0 2 24
+1 3 95
+0 4 17
+3 4 158
+1 4 88
+0 3 959
+1 2 410
+2 4 457
+2 3 787
+OutputCopy
+204*/
+
+#include <iostream>
+#include <cstdlib>
+#include <vector>
+#include <tuple>
+#include <algorithm>
+ 
+using namespace std;
+ 
+int findComponent(int device, vector<int>& component) {
+    if (component.at(device) != device) {
+        component.at(device) = findComponent(component.at(device), component);
+    }
+    return component.at(device);
+}   
+
+void mergeComponents(int u, int v, vector<int>& component1) {
+    int compU = findComponent(u, component1);
+    int compV = findComponent(v, component1);
+    if (compU != compV) {
+        component1.at(compU) = compV;
+    }
+}
+
+bool compareCost(const tuple<int, int, int>& a, const tuple<int, int, int>& b) {
+    return get<2>(a) < get<2>(b);
+}
+ 
+int minCostToConnect(int numDevices, vector<tuple<int, int, int>>& tupleVec) {
+    int device1;
+    int device2;
+    int cost1And2;
+    sort(tupleVec.begin(), tupleVec.end(), compareCost);
+ 
+    vector<int> component2(numDevices);
+    for (int i = 0; i < numDevices; ++i) {
+        component2.at(i) = i;
+    }
+ 
+    int overallCost = 0;
+    int edgesUsed = 0;
+ 
+    for (int i = 0; i < tupleVec.size(); ++i) {
+        device1 = get<0>(tupleVec.at(i));
+        device2 = get<1>(tupleVec.at(i));
+        cost1And2 = get<2>(tupleVec.at(i));
+ 
+        if (findComponent(device1, component2) != findComponent(device2, component2)) {
+            overallCost = overallCost + cost1And2;                
+            edgesUsed++;
+            mergeComponents(device1, device2, component2);
+ 
+            if (edgesUsed == numDevices - 1) {
+                break;
+            }
+        }
+    }
+ 
+    if (edgesUsed == numDevices - 1) {
+        return overallCost;
+    } 
+    else {
+        return -1;
+    }
+}
+ 
+int main(){
+    int numDevices;
+    int numConnections;
+    int userInput1;
+    int userInput2;
+    int userInput3;
+    tuple<int, int, int> device;
+    vector<tuple<int, int, int>> tupleVec;
+    int result;
+ 
+    cin >> numDevices;
+    cin >> numConnections;
+ 
+    for(int i = 0; i < numConnections; ++i){
+        cin >> userInput1;
+        cin >> userInput2;
+        cin >> userInput3;
+        device = make_tuple(userInput1, userInput2, userInput3);
+        tupleVec.push_back(device);
+    }
+ 
+    result = minCostToConnect(numDevices, tupleVec);
+    cout << result << endl;
+ 
+    return 0;
+}
