@@ -86,7 +86,7 @@ I could sort all the departments from least to greatest. The reasoning behind th
 I will be able to obtain the smallest number people needed from the departments with the least
 amount of people. After sorting, I can just divide the department by 2 in order to obtain the half, and
 then add 1 to it to obtain the majority vote. After adding all of the numbers needed, my end sum 
-is the total number of votes I need from all the departments.
+is the total number of votes I need from all the departments. <br>
 
 
 # Medium
@@ -143,6 +143,15 @@ numDevices - 1). The result is then outputted in the end, being the smallest
 cost to connect all the devices. The runtime of this algorithm should result in
 O(E log E) since it sorts the edges and has to go through them in order to compute the smallest cost. <br>
 
+**Pawn Dance** - The logic and thought process behind this problem was definitley way harder than the code,
+I first took all the coordinates and then sorted them from least to greatest. The reason behind this was due 
+to wanting to take the distance between coordinates and seieng which one had the greatest, as I can prioritize
+putting the pawns at the farthest distance. The numPawns == numMoves check serves to return 0 if the number of moves
+is equal to the number of pawns since I can directly place the pawns on those coordinates. If this is not the case
+then I take all the distances needed and sort through them. I then use a for loop to iterate through the numMoves - numPawns
+as this number represents the number of coordinates I would have to move from subtracting the pawns placed. It is then outptuted
+at the end.
+
 
 # Hard
 **Wizard Chess** - For this
@@ -164,3 +173,5 @@ the number of moves it took gets returned. The following lines are iterations of
 undergoing all the moves with checks if it goes out of bounds, if the square was
 visited, or if it was blocked. The time complexity of the BFS would be O(V +
 E) (vertices + edges)
+
+
