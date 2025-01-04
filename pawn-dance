@@ -1,0 +1,80 @@
+/* You are playing a game with N
+ pawns. You have randomly selected M
+ points along a number line where the i
+-th point has a coordinate of xi
+.
+
+You start the game by placing down your pawns on the number line at integer coordinates. You are allowed to place multiple pieces on the same coordinate. Then you will choose a pawn and either move it one unit to the left or to the right. In other words, if the coordinate of the piece is x
+, then you may move it to x−1
+ or x+1
+.
+
+Your objective is to visit all of the M
+ points that you have chosen in the beginning. When you first place down the pieces, you can consider that integer coordinate to be visited. What is the minimum number of moves required to do so?
+
+Input
+The first line contains n,m (1≤n,m≤105)
+ which represents the number of pawns that you have and the number of points that you have to visit on the number line.
+
+The next line contains m
+ integers. The i
+-th integer xi (−105≤xi≤105)
+ represents a coordinate on the number line that must be visited by at least one pawn. It is guaranteed that the xi
+s are distinct.
+
+Output
+Output a single integer that represents the minimum number of moves required to visit all m
+ points.
+
+Examples
+InputCopy
+2 5
+10 12 1 2 14
+OutputCopy
+5
+InputCopy
+3 7
+-10 -3 0 9 -100 2 17
+OutputCopy
+19*/
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int main() {
+    int numPawns;
+    int numMoves;
+    vector<int> coordinates;
+    int tempCoord;
+    vector<int> betweenCoordinates;
+    int totalMovesNeeded = 0;
+    
+    cin >> numPawns;
+    cin >> numMoves;
+    
+    for (int i = 0; i < numMoves; ++i) {
+        cin >> tempCoord;
+        coordinates.push_back(tempCoord);
+    }
+
+    sort(coordinates.begin(), coordinates.end());
+
+    if(numPawns == numMoves){
+        cout << "0" << endl;
+    }
+    else{
+        for(int i = 1; i < numMoves; ++i){
+            betweenCoordinates.push_back(coordinates.at(i) - coordinates.at(i - 1));
+        }
+
+        sort(betweenCoordinates.begin(), betweenCoordinates.end());
+        for(int i = 0; i < numMoves - numPawns; ++i){ //farthest distances taken up by the pawns
+            totalMovesNeeded = betweenCoordinates.at(i) + totalMovesNeeded; 
+        }
+        cout << totalMovesNeeded << endl;
+    }
+        
+    return 0;
+}
