@@ -81,6 +81,13 @@ minmum of them and updates the dpVec. Once all this is done, the min result
 is returned at the end. Due to the double for loop as well, it would lead to
 O(n^2) runtime. <br>
 
+**Vote Progamming Contest** For this problem, I knew that because I did not need the votes of all the departments
+I could sort all the departments from least to greatest. The reasoning behind this is because 
+I will be able to obtain the smallest number people needed from the departments with the least
+amount of people. After sorting, I can just divide the department by 2 in order to obtain the half, and
+then add 1 to it to obtain the majority vote. After adding all of the numbers needed, my end sum 
+is the total number of votes I need from all the departments.
+
 
 # Medium
 **The Stairs** - For this problem, I first declared all my integer variables and decided to use two
