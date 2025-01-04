@@ -1,0 +1,90 @@
+/*In UCR, to make any important decision, all the faculty need to vote to pass a proposal. However, it's very hard to gather all the faculty members to vote. Therefore, the voting process is very similar to the American presidential election. Each department will first vote for the proposal independently, and the majority wins. The university will then gather the chairs of all departments in a meeting, and the chairs will vote on behalf of the department (based on the voting result in their corresponding department). The majority in this vote wins. Note that in this vote, each department chair has the same weight (1 vote each).
+
+Recently, Yihan planed to organize a programming contest in UCR. As this is an important event, she needs to get approval from the university. To do this, she needs to persuade many faculty members that the contest is beneficial to students, and get their support. Surprisingly, she finds out that she doesn't need to persuade at least half of the faculty members on campus. For example, assume there are three departments, with 5, 7, and 5 faculty members, respectively. She only needs to persuade 3 of them from the first department and 3 of them from the third department. In that case, the first and the third departments will vote for yes, and in the department chair meeting, 2 out of 3 departments will vote for yes and win. This means, even though there are 17 faculty members on campus, she only needs to persuade 6 of them to be in favor of the proposal. This is also the minimum number of people Yihan needs to be in favor in order to pass the proposal.
+
+Given the number of departments in UCR, and the number of faculty members in each department, help Yihan decide how many supporters at least she needs to have. For simplicity, the number of faculty members in each department and the number of departments in UCR is guaranteed to be odd numbers.
+
+Input
+The first line is a single integer n (1≤n≤1000)
+, which is the number of departments at UCR. The next n
+ lines each contain an integer. The integer xi
+ in the i
+-th line is the number of faculty members in the i
+-th department.
+
+Output
+The output contains only one integer, which is the minimum number of supporters Yihan needs to pass the proposal of the event.
+
+Examples
+InputCopy
+3
+5
+7
+5
+OutputCopy
+6
+InputCopy
+3
+89
+67
+83
+OutputCopy
+76
+InputCopy
+5
+57
+41
+85
+61
+71
+OutputCopy
+81
+InputCopy
+11
+33
+1
+81
+97
+13
+45
+85
+63
+31
+13
+89
+OutputCopy
+71*/
+
+#include <iostream>
+#include <cstdlib>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+int main(){
+    int numDepartments;
+    vector<int> allDepartments;
+    int currDepartment;
+    int departmentsNeeded;
+    int sum = 0;
+
+    cin >> numDepartments;
+    
+    for(int i = 0; i < numDepartments; ++i){
+        cin >> currDepartment;
+        allDepartments.push_back((currDepartment/2) + 1);
+    }
+
+    sort(allDepartments.begin(), allDepartments.end());
+
+    departmentsNeeded = (numDepartments/2) + 1;
+    
+    for(int i = 0; i < departmentsNeeded; ++i){
+        sum = allDepartments.at(i) + sum;
+    }
+
+    cout << sum << endl;
+
+    return 0;
+}
