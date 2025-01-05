@@ -1,0 +1,147 @@
+/*A. Rearrange Molecules
+time limit per test1 second
+memory limit per test256 megabytes
+Professor Cesium has created a new process to transform some chemical product into another type of chemical with some residues. The process is simple: he just needs to input a given number of molecules of type A, enter the output type B he desires and start the machine. It creates as many molecules of type B as possible. Unfortunately, professor Cadmium was jealous of his work and tried to sabotage the machine by inverting wires on his machine. Professor Cesium, alerted by one of his assistants, was able to repair the mistake. To detect any problem in the future, he is asking you to create an automatic way to compute the number of molecules that the machine should output. With this algorithm, he is able to detect whether his precious machine was tampered with.
+
+Molecules are written as strings composed of uppercase letters (A through Z) and numbers. Uppercase letters represent atoms. Note that Cesium only uses single letters of the alphabet as abbreviations for atoms, so H, C, A, X, Y, ... can be used but He, Mg, ... cannot. If a letter is not followed by a number, it means there is only one atom of it. An atom followed by a number l
+ (1≤l≤103
+) represents l
+ copies of that atom. Atoms can appear multiple times in a chemical product.
+
+For example: H2OC100H means 2
+ atoms of H, then 1
+ of O, then 100
+ of C then 1
+ of H again.
+
+Input
+The first line contains one integer t
+ (1≤t≤104
+) – the number of test cases.
+
+Each test case is described by two lines.
+
+The first line contains a string s
+ consisting of uppercase English letters and numbers (1≤|s|≤2500
+), followed by an integer k
+ – the input molecule professor Cesium has and the number of molecules he has, respectively.
+The second line contains a string t
+ consisting of uppercase English letters and numbers (1≤|t|≤2500
+) – the desired output molecule.
+It is guaranteed that the sum of |s|
+ across all test cases does not exceed 106
+.
+
+It is guaranteed that the sum of |t|
+ across all test cases does not exceed 106
+.
+
+Output
+For each test case, output a single line containing the maximum number n
+ of output molecules we are able to construct using the input molecules.
+
+Example
+InputCopy
+6
+H 2
+O
+C2H6 10
+C3H8
+CH3OH 1
+CH4
+C6H6OCH2O 10
+HCN
+C6H14 10
+C5H10
+AB2CD1 2
+A2B3CD2
+OutputCopy
+0
+6
+1
+0
+12
+1
+
+*/
+
+#include <iostream>
+#include <unordered_map>
+#include <string>
+using namespace std;
+
+unordered_map<string, int> moleculeConverter(string& molecule) {
+    unordered_map<string, int> atomCounts;
+    int moleculeLength = molecule.length();
+    string atom = "";
+    int count = 0;
+
+    for (int i = 0; i < moleculeLength; ++i) {
+        if (isalpha(molecule.at(i))) {
+            if (!atom.empty()) {
+                if (count == 0) {
+                     atomCounts[atom] += 1;
+                } 
+                else {
+                    atomCounts[atom] += count;
+                }
+                count = 0;
+            }
+            atom = molecule.at(i);
+        } 
+        else if (isdigit(molecule.at(i))) {
+            count = count * 10 + (molecule.at(i) - '0');
+        }
+    }
+        if (!atom.empty()) {
+            if (count == 0) {
+                atomCounts[atom] += 1;
+        } 
+        else {
+                atomCounts[atom] += count;
+        }
+    }
+
+    return atomCounts;
+}
+
+int maxMolecules(string& inputMolecule, int numInput, string& outputMolecule) {
+    unordered_map<string, int> inputCounts = moleculeConverter(inputMolecule);
+    unordered_map<string, int> outputCounts = moleculeConverter(outputMolecule);
+    int maxMolecules = 999999999999;
+
+    for (auto& pair : inputCounts) {
+        pair.second = pair.second * numInput;
+    }
+
+    for (const auto& pair : outputCounts) {
+        const string& atom = pair.first;
+        int requiredCount = pair.second;
+
+        if (inputCounts.find(atom) == inputCounts.end()) {
+            return 0;
+        }
+        maxMolecules = min(maxMolecules, inputCounts.at(atom) / requiredCount);
+    }
+
+    return maxMolecules;
+}
+
+int main() {
+    int numTests;
+    string inputMolecule;
+    string desiredMolecule;
+    int numInput;
+
+    cin >> numTests;
+
+    while (numTests--) {
+        cin >> inputMolecule;
+        cin >> numInput;
+        cin >> desiredMolecule;
+
+        cout << maxMolecules(inputMolecule, numInput, desiredMolecule) << endl;
+    }
+    return 0;
+}
+  
