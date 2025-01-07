@@ -152,6 +152,10 @@ then I take all the distances needed and sort through them. I then use a for loo
 as this number represents the number of coordinates I would have to move from subtracting the pawns placed. It is then outptuted
 at the end.
 
+**Rearrange Molecules** I had lots of trouble understanding what the problem was even asking at first to be honest,
+probably nearly like 4 hours. I think a big thing that stumped me was trying to deduce what data structure would be ideal for the
+molecules and finding the max for it. I feel that the way I did it is very roundabout but it passed the tests, for sure a problem
+that I need to look back on in the future and see how I could have improved it.
 
 # Hard
 **Wizard Chess** - For this
