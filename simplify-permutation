@@ -1,0 +1,130 @@
+/*D. Simplify Permutation
+time limit per test2 s.
+memory limit per test256 MB
+Last week, making a graph simple was pretty difficult, so today, you'd like to make a permutation of the integers 1
+ to n
+ and you'd like to make it so that it becomes simple instead.
+
+A permutation p
+ is considered simple if for every i
+ (1≤i≤n)
+ one of the following conditions holds:
+
+pi=i
+ppi=i
+For example, the permutations [1,2,3,4]
+, [5,2,4,3,1]
+, and [2,1]
+ are simple, while [2,3,1]
+ and [5,2,1,4,3]
+ are not.
+
+In one operation, you can choose indices i,j
+ (1≤i,j≤n)
+ and swap the elements pi
+ and pj
+.
+
+Your task is to calculate the minimum number of operations to perform to make the permutation simple.
+
+Input
+The first line contains one integer t
+ (1≤t≤104
+) — the number of test cases.
+
+Each test case is described by two lines.
+
+The first line contains one integer n
+ (1≤n≤106
+) — the length of the permutation p
+.
+The second line contains n
+ integers pi
+ (1≤pi≤n
+) — the elements of the permutation p
+.
+It is guaranteed that the sum of n
+ across all test cases does not exceed 106
+.
+
+It is guaranteed that p
+ is a permutation.
+
+Output
+For each test case, output the minimum number of operations needed to perform to make the permutation simple.
+
+Example
+InputCopy
+6
+5
+1 2 3 4 5
+5
+5 4 3 2 1
+5
+2 3 4 5 1
+4
+2 3 4 1
+3
+1 3 2
+7
+2 3 1 5 6 7 4
+OutputCopy
+0
+0
+2
+1
+0
+2
+Note
+In the first and second examples, the permutations are already simple.
+
+In the fourth example, it is sufficient to swap p2
+ and p4
+. Thus, the permutation will become [2,1,4,3]
+ in 1
+ operation.
+*/
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int minOperations(int size, vector<int> permutation) {
+    vector<bool> visited(size, false);
+    int answer = 0;
+
+    for (int i = 0; i < size; ++i) {
+        if (!visited.at(i)) { 
+            int length = 0; 
+
+            for (int j = i; !visited.at(j); j = permutation.at(j)) {
+                visited.at(j) = true;
+                length++;
+            }
+            answer = answer + ((length - 1) / 2);
+        }
+    }
+    return answer;
+}
+
+int main() {
+    int numTests;
+    cin >> numTests;
+
+    while (numTests--) {
+        int permutationSize;
+        cin >> permutationSize;
+
+        vector<int> permutation;
+        for (int i = 0; i < permutationSize; ++i) {
+            int input;
+            cin >> input;
+            permutation.push_back(input - 1);
+        }
+
+        cout << minOperations(permutationSize, permutation) << endl;
+    }
+
+    return 0;
+}
