@@ -1,0 +1,108 @@
+/*D. Shooting
+time limit per test1 second
+memory limit per test256 megabytes
+Imagine a competitive shooting game where a player fires ten shots at a circular target defined by the equation x2+y2=1
+. The target is segmented into 10 concentric circles, including the outer boundary, with scores increasing as one moves toward the center. The task is to calculate the total score based on the location of each shot.
+
+The scoring rules are as follows:
+
+Shots outside the target circle (x2+y2=1
+) score 0 points.
+Shots within the target are scored from 1 to 10 points. The target is divided into ten equal-width concentric bands, with the innermost band scoring 10 points and the outermost band scoring 1 point.
+Shots landing on the boundary between two bands are scored as the higher of the two possible scores.
+
+
+Input
+The first line contains an integer n
+, which is the number of shots.
+
+The next n
+ lines each contain two real numbers x
+ and y
+, which means that the coordinate of the i
+-th shot is at (x,y)
+.
+
+Output
+The output contains one integer, which is the total score of the n
+ shots.
+
+Examples
+InputCopy
+3
+-0.210932 -0.61394
+0.0201856 0.259871
+0.029138 -0.447898
+OutputCopy
+18
+InputCopy
+3
+-0.0776681 -0.0136989
+73.4903 17.5509
+61.0631 -23.8335
+OutputCopy
+10
+InputCopy
+3
+-0.319824 0.395418
+-0.55179 82.9712
+0.184334 -0.252739
+OutputCopy
+12
+Note
+In 100% of the test data, 0<n≤1000
+, −100.0≤x,y≤100.0
+.
+
+Fun facts about shooting sports in the Olympics:
+
+Shooting was one of the nine events at the first modern Olympic Games in Athens, in 1896. Early competitions included some events now regarded as unusual, such as live pigeon shooting in 1900; dueling in 1906 and 1908; and numerous events restricted to military weapons. After the 1900 games, the pigeons were replaced with clay targets. In 1907, the International Shooting Sport Federation came into existence and brought some standardizations to the sport.
+
+
+*/
+
+#include <iostream>
+#include <cmath>
+ 
+using namespace std;
+ 
+int main() {
+    int shots;
+    cin >> shots;
+ 
+    float x, y;
+    int result = 0;
+ 
+    for (int i = 0; i < shots; i++) {
+        cin >> x >> y;
+ 
+        float distanceSquared = x * x + y * y;
+ 
+        if (distanceSquared >= 1) {
+            result += 0;
+        } else if (distanceSquared >= 0.9 * 0.9) {
+            result += 1;
+        } else if (distanceSquared >= 0.8 * 0.8) {
+            result += 2;
+        } else if (distanceSquared >= 0.7* 0.7) {
+            result += 3;
+        } else if (distanceSquared >= 0.6* 0.6) {
+            result += 4;
+        } else if (distanceSquared >= 0.5* 0.5) {
+            result += 5;
+        } else if (distanceSquared >= 0.4* 0.4) {
+            result += 6;
+        } else if (distanceSquared >= 0.3* 0.3) {
+            result += 7;
+        } else if (distanceSquared >= 0.2* 0.2) {
+            result += 8;
+        } else if (distanceSquared >= 0.1* 0.1) {
+            result += 9;
+        } else {
+            result += 10; 
+        }
+    }
+ 
+    cout << result << endl;
+    return 0;
+}
