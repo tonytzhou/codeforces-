@@ -1,0 +1,175 @@
+/*E. Ping Pong Games
+time limit per test1 second
+memory limit per test256 megabytes
+In this problem, your task is to write a program to track the score of a series of table tennis matches in real-time. Players A and B compete in the game, where Player A starts to serve in the first game, and then the first player to serve alternates in each game.
+
+Each match begins with one player and continues until one player wins the match by reaching at least 11 points and leading by at least 2 points. Within a game, the service changes every two points until a deuce (i.e., when the score reaches 10-10), after which the service changes after every point.
+
+Your program will receive the score result of each point, which is '1' if the serving side scores, and '-1' if the receiving side scores. Your goal is to simulate a live scoring system for a series of table tennis games, showing how points accumulate, and ultimately, which player wins each game.
+
+Input
+The first line contains one integer n
+.
+
+The next n
+ lines each contains one integer 1 or -1, where 1 means that the serving side scores 1 point, and -1 means the receiving side scores 1 point.
+
+The input data may contain multiple games. When a game finishes, the following input data correspond to the score of the next game - i.e., it is the score of the first serving side of the next game, so on so forth.
+
+The input data guarantees that the last line corresponds to the end of one game.
+
+Output
+The output contains n+t
+ lines, where t
+ is the total number of matches contained in the input.
+
+After each point in the input, one line should be output in the format of x:y (no space in between), where x is the current score of Player A, and y is the current score of Player B. After each game finishes, one more line should be output as "Player X wins the game.", where X should be A or B.
+
+Example
+InputCopy
+33
+1
+1
+-1
+-1
+1
+1
+-1
+-1
+1
+1
+-1
+1
+1
+-1
+-1
+1
+1
+-1
+-1
+1
+1
+1
+1
+-1
+-1
+1
+1
+-1
+-1
+1
+1
+1
+-1
+OutputCopy
+1:0
+2:0
+3:0
+4:0
+5:0
+6:0
+7:0
+8:0
+9:0
+10:0
+11:0
+Player X wins the game.
+0:1
+0:2
+0:3
+0:4
+0:5
+0:6
+0:7
+0:8
+0:9
+0:10
+1:10
+2:10
+3:10
+4:10
+5:10
+6:10
+7:10
+8:10
+9:10
+10:10
+10:11
+10:12
+Player Y wins the game.
+Note
+For 20% of the test data, there will be no deuce.
+
+For 50% of the test data, there will be only one game.
+
+For 100% of the test data, n≤1000
+, there can be multiple games.
+
+Fun Fact about Table Tennis:
+
+The longest table tennis rally, as shown on Guinness World Records, was achieved in Dec 12, 2020,, which lasted for 11 hours 50 minutes and 36 seconds.*/
+
+#include <iostream>
+#include <cstdlib>
+ 
+using namespace std;
+ 
+int main() {
+    int numInputs;
+    bool server = 0; 
+    bool serverTemp = 0;
+    int scorer;
+    int playerOneScore = 0; 
+    int playerTwoScore = 0;     
+    int twoPointCounter = 0;
+ 
+    cin >> numInputs;
+ 
+    while(numInputs--){
+        cin >> scorer;
+        if (scorer == 1) { //if scorer is 1, iterates the score of the person who served the ball
+            if (server == 0) {  //checks who is serving
+                playerOneScore++;
+            } else {
+                playerTwoScore++;
+            }
+        }
+        else if (scorer == -1) { //if scorer is -1, iterates the opposing side 
+            if (server == 0) {
+                playerTwoScore++;           
+            } else {
+                playerOneScore++;
+            }
+        }
+ 
+        cout << playerOneScore << ":" << playerTwoScore << endl; //outputs curr score
+        twoPointCounter++; //twopointcounter is made to check whether it is currently a deuce or not
+ 
+        if ((playerOneScore >= 10 && playerTwoScore >= 10) || twoPointCounter == 2) { //ensures the players switch either after deuce or every two points
+            //server = (server + 1) % 2; //tells us whos serving, will either get 0 or 1
+            server = !server;
+            twoPointCounter = 0;
+        } 
+        
+        if (playerOneScore >= 11 && (playerOneScore >= playerTwoScore + 2)) { //checks if the player's score is greater than 11 and greater than other player's score +2
+            cout << "Player X wins the game." << endl; //resets ever variable
+            playerOneScore = 0;
+            playerTwoScore = 0; 
+            twoPointCounter = 0;
+            scorer = 0;
+            serverTemp = !serverTemp; //used to keep track of who serves if multiple games occur, server should alternate
+            server = serverTemp;
+        }
+        else if(playerTwoScore >= 11 && (playerTwoScore >= playerOneScore + 2)) { //same as above, if above not true then checks if this is true
+            cout << "Player Y wins the game." << endl;
+            playerOneScore = 0;
+            playerTwoScore = 0;     
+            twoPointCounter = 0;
+            scorer = 0;
+            serverTemp = !serverTemp; //used to keep track of who serves if multiple games occur, server should alternate
+            server = serverTemp;
+        }
+    }
+ 
+    return 0;
+}
