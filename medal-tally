@@ -1,0 +1,115 @@
+/*C. Medal Tally
+time limit per test1 second
+memory limit per test256 megabytes
+You are given the results of n
+ Olympic events, specifically the countries that won the gold, silver, and bronze medals for each event. Your task is to generate a medal tally and identify the top three countries based on their medal counts. You will also need to output the count of gold, silver, and bronze medals for these top three countries.
+
+The medal tally should be sorted according to the following rules (descending order):
+
+- First, sort by the total number of medals (gold + silver + bronze). - If two or more countries have the same total number of medals, sort by the number of gold medals. - If the gold medal counts are the same, sort by the number of silver medals. - If the silver medal counts are also the same, sort by the number of bronze medals. - If all the above counts are identical, sort alphabetically by the country's name.
+
+Input
+The first line contains an integer n
+ representing the number of events.
+
+The next n
+ lines each contain three strings. Each line is an event and you are given the names of the countries that won gold, silver, and bronze medals, respectively. A space separates the names of two countries and there are no spaces in the names of the countries.
+
+Output
+The output contains three lines, representing the top three countries in the medal tally (from the first one to the third one). Each line contains:
+
+- A string, which is the name of the country, - a space - an integer, which is the number of gold medals of this country, - a space - an integer, which is the number of silver medals of this country, - a space - an integer, which is the number of bronze medals of this country.
+
+Example
+InputCopy
+9
+CHN KOR KAZ
+CHN USA GBR
+AUS GBR USA
+BEL ITA BEL
+FRA FJI ZAF
+GER AUS KOR
+AUS CAN USA
+AUS USA CHN
+USA AUS ITA
+OutputCopy
+AUS 3 2 0
+USA 1 2 2
+CHN 2 0 1
+Note
+The name of each country is within 100 characters. There can be at most 10000 events.
+
+Fun Fact about the Olympics Medal Tally:
+
+According to the all-time-Olympic-games-medal-table from Wikipedia, The United States has won more medals at the Summer Olympics than any other country, including gold, silver, and bronze. The second one is the Soviet Union, which has participated in the Summer Olympics nine times and won 1010 medals.
+
+For the Winter Olympics, Norway holds the record for the most medals, with 148 gold medals, 133 silver medals and 124 bronze medals.*/
+
+#include <iostream>
+#include <unordered_map>
+#include <vector>
+#include <algorithm>
+#include <string>
+ 
+using namespace std;
+ 
+ 
+struct MedalCount {
+    int gold = 0;
+    int silver = 0;
+    int bronze = 0;
+  
+    int total() const {
+        return gold + silver + bronze;
+    }
+};
+ 
+ 
+bool compare(const pair<string, MedalCount>& a, const pair<string, MedalCount>& b) {
+    const MedalCount& countA = a.second;
+    const MedalCount& countB = b.second;
+    if (countA.total() != countB.total()) {
+        return countA.total() > countB.total();
+    }
+    if (countA.gold != countB.gold) {
+        return countA.gold > countB.gold;
+    }
+    if (countA.silver != countB.silver) {
+        return countA.silver > countB.silver;
+    }
+    if (countA.bronze != countB.bronze) {
+        return countA.bronze > countB.bronze;
+    }
+    return a.first < b.first;
+}
+int main() {
+    int n;
+    cin >> n;
+    unordered_map<string, MedalCount> medalTally;
+ 
+    
+    for (int i = 0; i < n; i++) {
+        string gold, silver, bronze;
+        cin >> gold;
+        cin >> silver;
+        cin >> bronze;
+ 
+        medalTally[gold].gold++;
+        medalTally[silver].silver++;
+        medalTally[bronze].bronze++;
+    }
+ 
+    
+    vector<pair<string, MedalCount>> sortedTally(medalTally.begin(), medalTally.end());
+    
+    
+    sort(sortedTally.begin(), sortedTally.end(), compare);
+ 
+ 
+    for (int i = 0; i < 3 && i < sortedTally.size(); i++) {
+        cout << sortedTally[i].first << " " << sortedTally[i].second.gold << " " 
+        << sortedTally[i].second.silver << " "<< sortedTally[i].second.bronze << endl;
+    }
+ 
+    return 0;
+}
