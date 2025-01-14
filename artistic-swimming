@@ -1,0 +1,94 @@
+/*G. Artistic Swimming
+time limit per test5 seconds
+memory limit per test256 megabytes
+The Paris Olympics were the first time men were eligible to compete in Artistic Swimming. As the coach of an artistic swimming club, you plan to design some formations with both male and female athletes.
+
+You plan to form multiple trios among all the athletes. The formation of a trio involves one male and two females. To maximize the aesthetics and coordination of the team, the male in each group should be taller than both females flanking him.
+
+Given the heights of n
+ males and m
+ females, your task is to determine the maximum number of trios that can be formed where each trio meets the height requirement.
+
+Input
+The first line of input contains two integers n
+ and m
+, which are the number of male and female athletes, respectively.
+
+The second line contains n
+ integers, which is the height of the n
+ male athletes.
+
+The third line contains m
+ integers, which is the height of the m
+ female athletes.
+
+Output
+The output contains a single integer, which is the maximum number of trios that you can form.
+
+Example
+InputCopy
+3 5
+10 20 30
+1 10 20 30 40
+OutputCopy
+1
+Note
+For 50% of the test data, n,m≤1000
+.
+
+For 100% of the test data, n,m≤1000000
+, and the heights are within 109
+.
+
+Fun facts about artistic swimming:
+
+Artistic swimmers are among the best-conditioned athletes, and their training includes strength workouts, aerobic conditioning, flexibility exercises, and countless hours of practice in the water.
+
+
+*/
+
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <algorithm>
+ 
+using namespace std;
+ 
+int main() {
+    int numMales;
+    int numFemales;
+    int count = 0;
+    int input;
+    int trio = 0;
+    vector<int> males, females;
+ 
+    cin >> numMales;
+    cin >> numFemales;
+ 
+    for (int i = 0; i < numMales; i++) {
+        cin >> input;
+        males.push_back(input);
+    }
+    sort(males.begin(), males.end(), greater<int>());
+ 
+    for (int i = 0; i < numFemales; i++) {
+        cin >> input;
+        females.push_back(input);
+    }
+    sort(females.begin(), females.end(), greater<int>());
+ 
+    for (int i = 0; i < numMales; i++) {
+        while (trio + 1 < numFemales) {
+            if (females.at(trio) < males.at(i) && females.at(trio + 1) < males.at(i)) {
+                count++;
+                trio = trio + 2;
+                break;
+            } else {
+                trio++;
+            }
+        }
+    } 
+ 
+    cout << count << endl;
+    return 0;
+}
