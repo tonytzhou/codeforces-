@@ -1,0 +1,112 @@
+/*H. Triathlon Training
+time limit per test1 second
+memory limit per test256 megabytes
+You're gearing up to compete in a triathlon where each segment of the race—swimming, cycling, and running—is 100 units in length. Your current speeds for each segment are x
+ units per hour for swimming, y
+ units per hour for cycling, and z
+ units per hour for running.
+
+You also have data on the speeds of all other competitors in their respective segments.
+
+Before the race begins, you have the option to train to improve your speeds. Every hour of training can increase the speed of one segment by 1 unit (per hour), and you must train in whole hours to achieve the improvement (i.e., trainings under 1 hour will not take any effect).
+
+Now you want to know how many hours of training you need at least to be in the k
+-th place (or better) in the final competition. Your place is determined by the total time it takes to complete all three segments of the race (of course, shorter is better). If multiple athletes achieve the same result, they will be tied. In other words, the rank of an athlete is one plus the number of other athletes that finish in a shorter time. For example, if no one can finish faster than you (even though some of them may be as fast as you), then k=1
+, and you are the first place.
+
+Input
+The first line contains three integers, x,y,z
+, which are your speed for the three segments: swimming, cycling and running.
+
+The next line contains two integers n,k
+, where n
+ is the number of other athletes in the competition, and k
+ is the rank that you want to achieve (or any better ranks).
+
+The next n
+ lines each contain three integers x′,y′,z′
+, which describe the speeds for the three segments of one of your opponents.
+
+Output
+The output contains one integer, which is the minimum number of hours that you need for training.
+
+Example
+InputCopy
+1 2 3
+3 1
+5 5 5
+3 8 20
+10 12 15
+OutputCopy
+30
+Note
+For 30% of the test data, the output is within 10.
+
+For 50% of the test data, the output is within 100.
+
+For 100% of the test data, the output is within 105
+. All x,y,z
+ are within 108
+.
+
+Fun facts about Triathlon:
+
+Although the triathlon is made up of three long-standing sports, it is still a relatively young event. In the 1970s, the San Diego Track Club created the triathlon as a training tool. The triathlon made its Olympic debut relatively recently, at the Sydney Games in 2000.
+
+Because of the variability of courses and uncontrollable conditions, official time based records are not kept for the triathlon. This rule applies to Olympic games as well.
+
+
+*/
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+ 
+using namespace std;
+ 
+double timeCalculator(double x, double y, double z){
+    return (100 / x) + (100 / y) + (100 / z);
+}
+ 
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    double swimming, cycling, running;
+    int numAthletes, rank;
+    double swimming1, cycling1, running1;
+    int count = 0;
+ 
+    cin >> swimming;
+    cin >> cycling;
+    cin >> running;
+    cin >> numAthletes;
+    cin >> rank;
+ 
+    vector<double> times(numAthletes);
+  
+    for (int i = 0; i < numAthletes; i++) {
+        cin >> swimming1;
+        cin >> cycling1;
+        cin >> running1;
+        times[i] = timeCalculator(swimming1, cycling1, running1);
+    }
+ 
+    sort(times.begin(), times.end());
+ 
+    double currTime = timeCalculator(swimming, cycling, running);
+    double timeToBeat = times[rank - 1];
+  
+    while (currTime > timeToBeat) {
+        if (swimming <= cycling && swimming <= running) {
+            swimming++;
+        } else if (cycling <= swimming && cycling <= running) {
+            cycling++;
+        } else {
+            running++;
+        }
+        currTime = timeCalculator(swimming, cycling, running);
+        count++;
+    }
+ 
+    cout << count << endl;
+}
