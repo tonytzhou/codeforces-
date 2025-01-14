@@ -1,0 +1,100 @@
+/*B. Synchronized Diving
+time limit per test1 second
+memory limit per test256 megabytes
+In synchronized diving, a competition is judged by a panel of 11 judges, divided into groups focusing on the execution of each individual diver (E - Execution) and the synchronization of the two divers (S - Synchro). Each dive's score is calculated based on the execution scores for each diver and the synchronization between them, adjusted by the dive's difficulty coefficient.
+
+The judges are organized as follows:
+
+Execution Judges (E): Six judges are split into two groups of three, each group assessing one of the two divers. Each judge within a group provides a score for the dive's execution, ignoring the other diver's performance and their synchronization. The highest and lowest scores in each group are discarded, and the remaining score is used as a valid score.
+Synchronization Judges (S): Five judges assess how well the divers are synchronized in their approach, takeoff, in-air maneuvers, and water entry. The highest and lowest scores are discarded, and the remaining three scores are considered as valid scores.
+The final score for the dive is calculated by summing these five valid scores, multiplying the sum by 0.6, and then multiplying by the dive's difficulty coefficient to get the final score for the dive.
+
+Given the information of a synchronized diving, compute the final score of the divers.
+
+Input
+The first line contains three floats, which are scores from execution judges for the first diver.
+
+The second line contains three floats, which are scores from execution judges for the second diver.
+
+The third line contains five floats, which are scores from the synchronization judges.
+
+The fourth line contains a float representing the difficulty coefficient for the dive.
+
+Output
+The output contains one float, which is the final score of the dive. Please keep one digit after the decimal point.
+
+Example
+InputCopy
+1.0 2.0 3.0
+1.0 2.0 3.0
+1.0 2.0 3.0 4.0 5.0
+2.0
+OutputCopy
+15.6
+Note
+All the scores are between 0 to 10 (inclusive) and must be a multiple of 0.5.
+
+The difficulty coefficient is a real number between 2.0 to 4.5, and must be a multiple of 0.1,
+
+Fun Facts about Diving:
+
+In Olympic diving history, perfect scores of 10 are extremely rare. One of the most famous instances was when Greg Louganis of the USA scored perfect tens in the 1988 Seoul Olympics, despite hitting his head on the springboard during preliminary rounds. (So don't be sad when you didn't do well at the beginning!)
+
+
+#include <iostream>
+#include <cstdlib>
+#include <vector>
+#include <algorithm>
+#include <iomanip>
+ 
+ 
+using namespace std;
+ 
+ 
+int main() {
+    vector<float> firstVec;
+    vector<float> secondVec;
+    vector<float> thirdVec;
+    vector<float> tempVec;
+ 
+    float input = 0.0f;
+    float difficulty = 0.0f;
+    float result = 0.0f;
+ 
+    for (int i = 0; i < 3; ++i) {
+        cin >> input;
+        firstVec.push_back(input);
+    }
+ 
+    for (int i = 0; i < 3; ++i) {
+        cin >> input;
+        secondVec.push_back(input);
+    }
+ 
+    for (int i = 0; i < 5; ++i) {
+        cin >> input;
+        thirdVec.push_back(input);
+    }
+ 
+    cin >> difficulty;
+ 
+    sort(firstVec.begin(), firstVec.end());
+    sort(secondVec.begin(), secondVec.end());
+    sort(thirdVec.begin(), thirdVec.end());
+ 
+    tempVec.push_back(firstVec.at(1));
+    tempVec.push_back(secondVec.at(1));
+ 
+    for (int i = 1; i < thirdVec.size() - 1; ++i) {
+        tempVec.push_back(thirdVec.at(i));
+    }
+ 
+    for (int i = 0; i < tempVec.size(); ++i) {
+        result += tempVec.at(i);
+    }
+    result = (result * 0.6) * difficulty;
+    cout << fixed << setprecision(1) << result << endl;
+ 
+ 
+    return 0;
+}
