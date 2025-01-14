@@ -1,0 +1,64 @@
+/*A. Torchbearers
+time limit per test1 second
+memory limit per test256 megabytes
+Carrying the Olympic flame from Olympia, Greece, to the host city via a torch relay is one of the most exciting parts before the Olympic Games. This year, there are k torchbearers participating in the torch relay. The i
+-th torchbearer runs di
+ kilometers at a speed of si
+ km/h (kilometers per hour). There is no delay between two torchbearers. How many hours are needed in total to complete the torch relay?
+
+Input
+The first line contains one integer k
+.
+
+The next k
+ lines, each containing two real numbers, di
+ and si
+, which is the distance and the speed for the i
+-th torchbearer.
+
+Output
+The output is one single real number, which is the number of hours needed to finish the torch relay. Please keep 5 digits after the decimal point.
+
+Example
+InputCopy
+5
+10.0 2.0
+3.0 2.0
+4.0 3.0
+6.0 2.5
+2.4 1.1
+OutputCopy
+12.41515
+Note
+For 100 Fun fact about the Olympic flame:
+
+Do you know that the Olympic flame has traveled to space? In 1996, the Olympic flame traveled to space with NASA astronauts before the Atlanta Summer Olympics. It happened again in 2000 for the Sydney Olympics and in 2013 for the Sochi Winter Games.
+*/
+
+#include <iostream>
+#include <iomanip>
+ 
+using namespace std;
+ 
+ 
+ 
+int main(){
+ 
+int lines;
+cin >> lines;
+double distance;
+double km;
+double result = 0.0;
+for(int i = 0; i < lines; i++){
+cin >> distance;
+cin >> km;
+if( km != 0 ){
+result += distance / km;
+}
+}
+cout << fixed << setprecision(5) << result;
+ 
+ 
+ 
+    return 0;
+}
